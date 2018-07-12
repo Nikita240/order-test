@@ -19,4 +19,4 @@ use Illuminate\Http\Request;
 
 Route::apiResource('products', 'API\ProductController')->only(['index', 'show']);
 
-Route::apiResource('orders', 'API\OrderController');
+Route::apiResource('orders', 'API\OrderController')->only(['create', 'show']);

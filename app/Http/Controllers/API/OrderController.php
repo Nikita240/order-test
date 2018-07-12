@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests;
+use App\Order;
+use App\Product;
 
 class OrderController extends Controller
 {
@@ -14,10 +16,10 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+    // public function index()
+    // {
+    //     //
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -27,7 +29,14 @@ class OrderController extends Controller
      */
     public function store(Requests\OrderRequest $request)
     {
-        return $request;
+        // Create new Order
+        $order = new Order;
+        $order->save();
+
+        //add products to order
+        $order->products()->sync(collect($request->products)->pluck('id'));
+
+        return $order;
     }
 
     /**
@@ -38,7 +47,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        return Order::where('id', $id)->with('products')->firstOrFail();
     }
 
     /**
@@ -48,10 +57,10 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    // public function update(Request $request, $id)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -59,8 +68,8 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
+    // public function destroy($id)
+    // {
+    //     //
+    // }
 }

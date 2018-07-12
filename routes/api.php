@@ -17,6 +17,4 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-Route::apiResources([
-    'products' => 'API\ProductController'
-]);
+Route::apiResource('products', 'API\ProductController')->only(['index', 'show']);

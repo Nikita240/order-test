@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrderRequest extends FormRequest
+class PaymentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,8 +32,6 @@ class OrderRequest extends FormRequest
             case 'POST':
             {
                 return [
-                    'products' => 'required',
-                    'products.*.id' => 'required|distinct|exists:products'
                 ];
             }
             case 'PUT':

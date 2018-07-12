@@ -19,4 +19,7 @@ use Illuminate\Http\Request;
 
 Route::apiResource('products', 'API\ProductController')->only(['index', 'show']);
 
-Route::apiResource('orders', 'API\OrderController')->only(['create', 'show']);
+// Route::post('orders/{order}', 'API\OrderController@submit');
+Route::apiResource('orders', 'API\OrderController')->only(['store', 'show']);
+
+Route::apiResource('orders/{order}/payment', 'API\PaymentController')->only(['store']);

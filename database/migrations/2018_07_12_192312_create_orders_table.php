@@ -29,8 +29,6 @@ class CreateOrdersTable extends Migration
 
             $table->primary(['order_id', 'product_id']);
 
-            $table->integer('quantity')->unsigned()->default(1);
-
             $table->timestamps();
         });
     }

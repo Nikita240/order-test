@@ -4,7 +4,6 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Product::class, function (Faker $faker) {
     return [
-        'name' => $faker->company(),
-        'availability' => $faker->randomDigit()
+        'name' => $faker->company()
     ];
 });

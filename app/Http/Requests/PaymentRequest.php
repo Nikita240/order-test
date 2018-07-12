@@ -32,6 +32,7 @@ class PaymentRequest extends FormRequest
             case 'POST':
             {
                 return [
+                    'token' => 'required'
                 ];
             }
             case 'PUT':

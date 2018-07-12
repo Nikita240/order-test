@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Order;
 
+use Stripe;
+
 class PaymentController extends Controller
 {
     /**
@@ -28,7 +30,31 @@ class PaymentController extends Controller
      */
     public function store(Requests\PaymentRequest $request, Order $order)
     {
-        return $order;
+        // Forbid action if order already complete
+        if($order->completed == true) {
+            abort(403);
+        }
+
+        Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+
+        // For "test" tokens, go here:
+        // https://stripe.com/docs/testing#cards
+        try {
+            $charge = Stripe\Charge::create([
+                'amount' => round(1.2*100),
+                'currency' => 'usd',
+                'source' => $request->token // we let Stripe handle the credit card integrations
+            ]);
+        }
+        catch (Stripe\Error\Base $e) {
+            return ['status' => 'Payment Failure'];
+        }
+
+        // Mark order as complete
+        $order->completed = true;
+        $order->save();
+
+        return ['status' => 'Payment Success'];
     }
 
     /**

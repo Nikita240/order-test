@@ -13,4 +13,14 @@ class Order extends Model
     {
         return $this->belongsToMany('App\Product');
     }
+
+    /**
+     * Get the total cost for this order
+     *
+     * @return int Cost of this order in cents
+     */
+    public function getTotalAttribute()
+    {
+        return $this->products->sum('cost');
+    }
 }

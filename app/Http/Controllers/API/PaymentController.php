@@ -35,16 +35,13 @@ class PaymentController extends Controller
             abort(403);
         }
 
-        // add up products in the order to calculate charge amount in cents
-        $chargeAmount = $order->products->sum('cost');
-
         Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
         // For "test" tokens, go here:
         // https://stripe.com/docs/testing#cards
         try {
             $charge = Stripe\Charge::create([
-                'amount' => $chargeAmount,
+                'amount' => $order->total,
                 'currency' => 'usd',
                 'source' => $request->token // we let Stripe handle the credit card integrations
             ]);
